@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Superhero;
+use Faker\Provider\Company;
 use Illuminate\Http\Request;
 
 class SuperheroController extends Controller
@@ -13,7 +15,8 @@ class SuperheroController extends Controller
      */
     public function index()
     {
-        //
+        $superheros=Superhero::all();
+        return view('superhero.index',compact('superheros'));
     }
 
     /**
@@ -23,7 +26,7 @@ class SuperheroController extends Controller
      */
     public function create()
     {
-        //
+        return view('superhero.create');
     }
 
     /**
@@ -34,7 +37,15 @@ class SuperheroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Superhero::create($request->only([
+            'nickname',
+            'real_name',
+            'origin_description',
+            'superpowers',
+            'catch_phrase',
+
+        ]));
+        return redirect()->route('superhero.index');
     }
 
     /**
@@ -43,9 +54,9 @@ class SuperheroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Superhero $superhero)
     {
-        //
+        return view('superhero.show',compact('superhero'));
     }
 
     /**
@@ -54,9 +65,9 @@ class SuperheroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Superhero $superhero)
     {
-        //
+        return view('superhero.create',compact('superhero'));
     }
 
     /**
@@ -66,9 +77,10 @@ class SuperheroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Superhero $superhero)
     {
-        //
+        $superhero->update($request->all());
+        return redirect()->route('superhero.index');
     }
 
     /**
@@ -77,8 +89,9 @@ class SuperheroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Superhero $superhero)
     {
-        //
+        $superhero->delete();
+        return redirect()->route('superhero.index');
     }
 }
