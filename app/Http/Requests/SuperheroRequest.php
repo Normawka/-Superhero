@@ -13,7 +13,7 @@ class SuperheroRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,31 @@ class SuperheroRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'nickname'=>'required|min:1|max:255',
+            'real_name'=>'min:1|max:255',
+            'origin_description'=>'min:1|max:500',
+            'superpowers'=>'min:2|max:255',
+            'catch_phrase'=>'min:2|max:255',
+            'photos' => 'array',
+            'photos.*' => 'image|mimes:jpeg,bmp,png|max:2000'
+        ];
+//        $photos = count($this->input('photos'));
+//        foreach(range(0, $photos) as $index) {
+//            $rules['photos.' . $index] = 'image|mimes:jpeg,bmp,png|max:2000';
+//        }
+        return $rules;
+    }
+    public function messages()
+    {
+        return[
+            'required' => 'Field :attribute is required' ,
+            'min' => 'Field :attribute  must have at least :min characters',
+            'max' => 'Field :attribute must have a maximum of :max characters',
+            'numeric' => 'Field :attribute field must only contain numbers',
+            'unique' => 'Such :attribute exists enter other data',
+            'image' => 'Upload :attribute pictures only',
+            'mimes' => 'Download only jpeg, bmp, png',
         ];
     }
 }

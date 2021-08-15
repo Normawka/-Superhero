@@ -22,7 +22,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <form method="POST"
+            <form method="POST" enctype="multipart/form-data"
                   @if (isset($superhero))
                   action="{{route('superhero.update',$superhero)}}"
                   @else
@@ -45,6 +45,29 @@
                                     </button>
                                 </div>
                             </div>
+
+                                <div class="text-center">
+                                    @if (isset($superhero))
+                                    @foreach($superhero->superhero_images as $image)
+                                    <img class="profile-user-img img-fluid img-thumbnail" width="100px" height="100px"
+                                         src="{{asset('photos/'.$image['filename'])}}"
+                                         alt="User profile picture">
+
+                                            @isset($image)
+                                                <div class="form-group form-check">
+
+                                                    <input type="checkbox" class="form-check-input" name="remove" id="remove" value="{{$image['id']}}">
+                                                    <label class="form-check-label" for="remove">
+                                                        Delete uploaded image <a href="{{ $image['id'] }}" target="_blank"></a>
+                                                    </label>
+                                                </div>
+                                            @endisset
+
+                                    @endforeach
+                                    @endif
+                                </div>
+
+
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="inputName">Nik name</label>
@@ -64,16 +87,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPhone">Origin description</label>
-                                    <input type="text" name="origin_description" placeholder="origin_description" aria-label="origin_description"
-                                           value="{{old('origin_description',isset($superhero) ? $superhero->origin_description:null)}}" class="form-control" rows="4">
+                                    <textarea class="form-control" type="text"  name="origin_description" rows="5" id="origin_description">{{old('origin_description',isset($superhero) ? $superhero->origin_description:null)}}</textarea>
                                     @error('origin_description')
                                     <div class="alert alert-danger">{{$message}}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail">Superpowers</label>
-                                    <input type="text" name="superpowers" placeholder="superpowers" aria-label="superpowers"
-                                           value="{{old('superpowers',isset($superhero) ? $superhero->superpowers:null)}}" class="form-control" rows="4">
+                                    <textarea class="form-control" type="text"  name="superpowers" rows="5" id="superpowers">{{old('superpowers',isset($superhero) ? $superhero->superpowers:null)}}</textarea>
+
                                     @error('superpowers')
                                     <div class="alert alert-danger">{{$message}}</div>
                                     @enderror
@@ -86,6 +108,15 @@
                                     <div class="alert alert-danger">{{$message}}</div>
                                     @enderror
                                 </div>
+                                {{ csrf_field() }}
+                                    Superhero photos (can attach more than one): <br>
+                                    <input multiple name="photos[]" type="file" id="photos">
+                                    <br><br>
+
+
+                                @error('photos')
+                                <div class="alert alert-danger">{{$message}}</div>
+                                @enderror
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -107,5 +138,8 @@
     </div>
 
     <!-- /.content-wrapper -->
+
+
+
 
 @endsection

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class SuperheroImage extends Model
 {
     use HasFactory;
+    protected $fillable = ['filename','superhero_id'];
+    public function superhero(){
+        return $this->belongsTo(Superhero::class);
+    }
 }

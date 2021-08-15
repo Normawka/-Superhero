@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\SuperheroController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +18,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('superhero',\App\Http\Controllers\SuperheroController::class);
+Route::resource('superhero',SuperheroController::class);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

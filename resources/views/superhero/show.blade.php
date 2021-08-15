@@ -13,8 +13,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">User Profile</li>
+                            <li class="breadcrumb-item"><a href="{{route('superhero.index')}}">Home</a></li>
+                            <li class="breadcrumb-item active">Superhero Profile</li>
                         </ol>
                     </div>
                 </div>
@@ -30,10 +30,14 @@
                         <!-- Profile Image -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
+{{--                                @dd($superhero)--}}
+
                                 <div class="text-center">
+                                    @foreach($superhero->superhero_images as $image)
                                     <img class="profile-user-img img-fluid img-circle"
-                                         src="../../dist/img/user4-128x128.jpg"
-                                         alt="User profile picture">
+                                         src="{{asset('photos/'.$image['filename'])}}"
+                                         alt="User profile picture" width="200px">
+                                    @endforeach
                                 </div>
 
                                 <h3 class="profile-username text-center">{{$superhero->nickname}}</h3>
