@@ -34,7 +34,7 @@
 
                                 <div class="text-center">
                                     @foreach($superhero->superhero_images as $image)
-                                    <img class="profile-user-img img-fluid img-circle"
+                                    <img class="profile-user-img img-fluid img-fluid"
                                          src="{{asset('photos/'.$image['filename'])}}"
                                          alt="User profile picture" width="200px">
                                     @endforeach

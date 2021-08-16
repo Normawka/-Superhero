@@ -24,7 +24,7 @@ class SuperheroRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'nickname'=>'required|min:1|max:255',
+            'nickname'=>'min:1|max:255',
             'real_name'=>'min:1|max:255',
             'origin_description'=>'min:1|max:500',
             'superpowers'=>'min:2|max:255',

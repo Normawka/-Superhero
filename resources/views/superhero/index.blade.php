@@ -25,6 +25,11 @@
         <section class="content">
 
             <!-- Default box -->
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
 
             <div class="card card-solid">
                 <div class="card-body pb-0">

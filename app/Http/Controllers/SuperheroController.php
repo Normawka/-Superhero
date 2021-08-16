@@ -23,7 +23,7 @@ class SuperheroController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -49,14 +49,14 @@ class SuperheroController extends Controller
 
             (new PhotosController)->createPhoto($request, $superhero);
 
-        return redirect()->route('superhero.index');
+        return redirect()->route('superhero.index',302);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Superhero $superhero
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Superhero $superhero)
     {
@@ -68,7 +68,7 @@ class SuperheroController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Superhero $superhero)
     {
@@ -78,9 +78,9 @@ class SuperheroController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param SuperheroRequest $request
+     * @param Superhero $superhero
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(SuperheroRequest $request, Superhero $superhero)
     {
@@ -99,11 +99,11 @@ class SuperheroController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Superhero $superhero)
     {
         $superhero->delete();
-        return redirect()->route('superhero.index');
+        return redirect()->route('superhero.index')->with('success', 'Superhero destroyed');
     }
 }
